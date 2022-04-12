@@ -1,20 +1,17 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-tooltip-overhaul';
+import {StyleSheet, View, Text} from 'react-native'
+import TipProvider, {Tip} from 'react-native-tooltip-overhaul'
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
-
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Tip title="Tip" body="asdasd">
+        <Text>Result</Text>
+      </Tip>
+      <TipProvider />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -28,4 +25,4 @@ const styles = StyleSheet.create({
     height: 60,
     marginVertical: 20,
   },
-});
+})
