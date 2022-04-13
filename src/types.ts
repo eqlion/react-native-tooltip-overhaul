@@ -184,3 +184,14 @@ export type TipProviderProps = {
    */
   prevNextTextStyle?: TextStyle
 }
+
+export type ItemCoords = {
+  width: number
+  height: number
+  px: number
+  py: number
+  centerPoint: {
+    y: number
+    x: number
+  }
+}

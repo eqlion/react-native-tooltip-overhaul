@@ -311,12 +311,15 @@ export default class TipProvider extends Component<TipProviderProps> {
           ...this.getTipAnimation(),
         }}>
         {/* Tip leg */}
-        {/* <View style={{
-                    ...styles.arrow,
-                    ...arrowPosition,
-                    borderBottomColor: tipStyle.backgroundColor,
-                    borderTopColor: tipStyle.backgroundColor
-                }} /> */}
+        <View
+          style={{
+            ...styles.arrow,
+            ...arrowPosition,
+            borderBottomColor: tipStyle.backgroundColor,
+            borderTopColor: tipStyle.backgroundColor,
+            transform: [{rotate: '-90deg'}],
+          }}
+        />
 
         <TouchableOpacity
           activeOpacity={0.8}

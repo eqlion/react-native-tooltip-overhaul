@@ -6,9 +6,16 @@ import TipProvider, {Tip} from 'react-native-tooltip-overhaul'
 export default function App() {
   return (
     <View style={styles.container}>
-      <Tip title="Tip" body="asdasd">
-        <Text>Result</Text>
-      </Tip>
+      <View>
+        <View
+          style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}>
+          <View style={{flex: 1, backgroundColor: 'red', opacity: 0.2}} />
+          <View style={{flex: 1, backgroundColor: 'green', opacity: 0.2}} />
+        </View>
+        <Tip title="Tip" body="asdasd">
+          <Text>Result</Text>
+        </Tip>
+      </View>
       <TipProvider />
     </View>
   )

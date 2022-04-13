@@ -1,6 +1,7 @@
 import {UIManager, Dimensions, StatusBar} from 'react-native'
+import type {ItemCoords} from './types'
 
-export const TOP_OFFSET = 5
+export const TOP_OFFSET = 10
 export const ARROW_WIDTH = 20
 export const ARROW_HEIGHT = 15
 export const RENDER_BOUNDARY = 5
@@ -50,12 +51,50 @@ export async function getItemCoordinates(target) {
   return itemCoordinates
 }
 
-export function getTipPositionProps(itemCoords, tipHeight, tipWidth) {
+const leftPosition = (
+  itemCoords: ItemCoords,
+  _tipHeight: number,
+  tipWidth: number,
+) => {
+  const {height = 0, centerPoint, width = 0} = itemCoords
+  const tipPosition = {
+    top: centerPoint.y - height / 2 - TOP_OFFSET, //py + height + TOP_OFFSET, //+ ARROW_HEIGHT,
+    left: centerPoint.x - tipWidth - width / 2 - TOP_OFFSET,
+  }
+  const arrowPosition = {
+    top: height / 2 + (ARROW_HEIGHT - ARROW_WIDTH) / 2 + TOP_OFFSET / 2,
+    left: tipWidth + (ARROW_HEIGHT - ARROW_WIDTH),
+    transform: [{rotate: '90deg'}],
+  }
+}
+
+const rightPosition = (
+  itemCoords: ItemCoords,
+  _tipHeight: number,
+  tipWidth: number,
+) => {
+  const {height = 0, centerPoint, width = 0} = itemCoords
+  const tipPosition = {
+    top: centerPoint.y - height / 2 - TOP_OFFSET, //py + height + TOP_OFFSET, //+ ARROW_HEIGHT,
+    left: centerPoint.x + width / 2 + ARROW_HEIGHT + TOP_OFFSET,
+  }
+  const arrowPosition = {
+    top: height / 2 + (ARROW_HEIGHT - ARROW_WIDTH) / 2 + TOP_OFFSET / 2,
+    right: tipWidth + (ARROW_HEIGHT - ARROW_WIDTH), // centerPoint.x - tipPosition.left - ARROW_WIDTH / 2,
+    transform: [{rotate: '-90deg'}],
+  }
+}
+
+export function getTipPositionProps(
+  itemCoords: ItemCoords,
+  tipHeight: number,
+  tipWidth: number,
+) {
   const {height = 0, py = 0, centerPoint, width = 0} = itemCoords
 
   const tipPosition = {
     top: centerPoint.y - height / 2 - TOP_OFFSET, //py + height + TOP_OFFSET, //+ ARROW_HEIGHT,
-    left: centerPoint.x - tipWidth - width / 2 - TOP_OFFSET,
+    left: centerPoint.x + width / 2 + ARROW_HEIGHT + TOP_OFFSET,
   }
 
   // if tip extrapolates screen on left side
@@ -74,8 +113,8 @@ export function getTipPositionProps(itemCoords, tipHeight, tipWidth) {
   const shouldInvertTip = false //tipBottomY > screenHeight
 
   const arrowPosition = {
-    top: -ARROW_HEIGHT,
-    left: centerPoint.x - tipPosition.left - ARROW_WIDTH / 2,
+    top: height / 2 + (ARROW_HEIGHT - ARROW_WIDTH) / 2 + TOP_OFFSET / 2,
+    right: tipWidth + (ARROW_HEIGHT - ARROW_WIDTH), // centerPoint.x - tipPosition.left - ARROW_WIDTH / 2,
   }
 
   if (shouldInvertTip) {
