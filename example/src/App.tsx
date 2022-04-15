@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import {StyleSheet, View, Text} from 'react-native'
-import TipProvider, {Tip} from 'react-native-tooltip-overhaul'
+import TipProvider, {Tip, NewTip} from 'react-native-tooltip-overhaul'
 
 export default function App() {
   return (
@@ -12,9 +12,9 @@ export default function App() {
           <View style={{flex: 1, backgroundColor: 'red', opacity: 0.2}} />
           <View style={{flex: 1, backgroundColor: 'green', opacity: 0.2}} />
         </View>
-        <Tip title="Tip" body="asdasd">
+        <NewTip>
           <Text>Result</Text>
-        </Tip>
+        </NewTip>
       </View>
       <TipProvider />
     </View>
