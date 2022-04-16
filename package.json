@@ -151,5 +151,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "react-native-safe-area-context": "^4.2.4"
   }
 }
