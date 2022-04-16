@@ -18,3 +18,5 @@ function showTipTour(steps: []) {
 export default TipProvider
 export {Tip, closeTip, showTip, showTipTour}
 export {Tip as NewTip} from './newTip/Tip'
+export {TipProvider as NewTipProvider} from './newTip/TipProvider'
+export {ETipPosition} from './newTip/types'
