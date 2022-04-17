@@ -1,28 +1,45 @@
-import React from 'react'
+import React, {useCallback, useRef} from 'react'
 import type {FC} from 'react'
-import {StyleSheet, View, Text} from 'react-native'
+import {StyleSheet, View, Text, Button} from 'react-native'
 import {
-  NewTip,
-  NewTipProvider,
+  Tip,
+  TipProvider,
   ETipPosition,
+  TipMethods,
 } from 'react-native-tooltip-overhaul'
 
 const App: FC = () => {
-  return (
-    <NewTipProvider>
-      <View style={styles.container}>
-        <View style={styles.container}>
-          <NewTip position={ETipPosition.RIGHT}>
-            <Text>Result1</Text>
-          </NewTip>
-        </View>
-        <View style={styles.container}>
-          <NewTip position={ETipPosition.LEFT}>
-            <Text>Result2</Text>
-          </NewTip>
-        </View>
+  const renderTip = useCallback(
+    () => (
+      <View
+        style={{
+          padding: 10,
+          borderRadius: 10,
+          backgroundColor: '#fff',
+        }}>
+        <Text style={{color: '#000'}}>ABOBUS</Text>
       </View>
-    </NewTipProvider>
+    ),
+    [],
+  )
+  const tipRef = useRef<TipMethods>(null)
+
+  return (
+    <TipProvider>
+      <View style={styles.container}>
+        {/* <View style={styles.container}> */}
+        <Tip renderTip={renderTip} position={ETipPosition.AUTO} ref={tipRef}>
+          <Text style={{backgroundColor: 'red'}}>Result1</Text>
+        </Tip>
+        {/* </View> */}
+        {/* <View style={styles.container}> */}
+        <Tip renderTip={renderTip} position={ETipPosition.AUTO}>
+          <Text>Result2</Text>
+        </Tip>
+        {/* </View> */}
+        <Button title="Open tip" onPress={() => tipRef.current?.showTip()} />
+      </View>
+    </TipProvider>
   )
 }
 
@@ -31,7 +48,7 @@ export default App
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
   },
 })

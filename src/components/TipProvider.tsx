@@ -1,18 +1,18 @@
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useRef, useState} from 'react'
 import type {FC, PropsWithChildren} from 'react'
-import {TipContext} from './TipContext'
-import {Modal, Text, View} from 'react-native'
-import {ETipPosition, IMeasurements, ShowTipArgs} from './types'
-import {Overlay} from './Overlay'
+import {Modal} from 'react-native'
 import {
   SafeAreaProvider,
   useSafeAreaFrame,
 } from 'react-native-safe-area-context'
+
+import {Overlay} from './Overlay'
 import {TipBody} from './TipBody'
 
-type Props = {}
+import {TipContext} from '../contexts'
+import {ETipPosition, IMeasurements, RenderTip, ShowTipArgs} from '../types'
 
-const TipProvider_: FC<PropsWithChildren<Props>> = ({children}) => {
+const TipProvider_: FC<PropsWithChildren<{}>> = ({children}) => {
   const [isModalShown, setModalShown] = useState(false)
   const {y} = useSafeAreaFrame()
   const [measurements, setMeasurements] = useState<IMeasurements>({
@@ -24,13 +24,14 @@ const TipProvider_: FC<PropsWithChildren<Props>> = ({children}) => {
   const [currentPosition, setCurrentPosition] = useState<ETipPosition>(
     ETipPosition.AUTO,
   )
-  // const [tipSize, setTipSize] = useState<ITipSize>({
-  //   width: 0,
-  //   height: 0,
-  // })
+  // Storing function in a state is weird, so storing it in a ref
+  const renderTip = useRef<RenderTip>(() => null)
 
   const showTip = useCallback(
     (args: ShowTipArgs) => {
+      // changing ref does not cause UI update,
+      // however the changing state right after it does
+      renderTip.current = args.renderTip
       setMeasurements({
         ...args.measurements,
         y: args.measurements.y + y,
@@ -41,10 +42,15 @@ const TipProvider_: FC<PropsWithChildren<Props>> = ({children}) => {
     [y],
   )
 
+  const closeTip = useCallback(() => {
+    setModalShown(false)
+  }, [])
+
   return (
     <TipContext.Provider
       value={{
         showTip,
+        closeTip,
       }}>
       {children}
       <Modal
@@ -57,14 +63,7 @@ const TipProvider_: FC<PropsWithChildren<Props>> = ({children}) => {
         statusBarTranslucent>
         <Overlay onPress={() => setModalShown(false)}>
           <TipBody position={currentPosition} itemPosition={measurements}>
-            <View
-              style={{
-                padding: 10,
-                borderRadius: 10,
-                backgroundColor: '#fff',
-              }}>
-              <Text style={{color: '#000'}}>ABOBUS</Text>
-            </View>
+            {renderTip.current()}
           </TipBody>
         </Overlay>
       </Modal>
@@ -72,7 +71,7 @@ const TipProvider_: FC<PropsWithChildren<Props>> = ({children}) => {
   )
 }
 
-export const TipProvider: FC<PropsWithChildren<Props>> = (props) => {
+export const TipProvider: FC<PropsWithChildren<{}>> = (props) => {
   return (
     <SafeAreaProvider>
       <TipProvider_ {...props} />

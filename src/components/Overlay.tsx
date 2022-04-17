@@ -6,8 +6,8 @@ type Props = {opacity?: number; onPress: () => void}
 
 export const Overlay: FC<PropsWithChildren<Props>> = ({
   children,
-  opacity = 0.6,
   onPress,
+  opacity = 0.6,
 }) => {
   const backgroundColor = `#000000${(opacity * 255).toString(16)}`
 

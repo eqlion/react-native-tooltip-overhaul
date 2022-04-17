@@ -1,8 +1,8 @@
 import React, {useCallback, useState} from 'react'
 import type {FC, PropsWithChildren} from 'react'
 import {LayoutChangeEvent, View, StyleSheet} from 'react-native'
-import type {ETipPosition, IMeasurements, ITipSize} from './types'
-import {useTipCoords} from './hooks'
+import type {ETipPosition, IMeasurements, ITipSize} from '../types'
+import {useTipCoords} from '../hooks'
 
 type Props = {position: ETipPosition; itemPosition: IMeasurements}
 

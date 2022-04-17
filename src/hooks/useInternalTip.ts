@@ -1,7 +1,7 @@
 import {useContext} from 'react'
-import {TipContext} from '../TipContext'
+import {TipContext} from '../contexts'
 
-export const useTip = () => {
+export const useInternalTip = () => {
   const context = useContext(TipContext)
 
   if (context === null) {
