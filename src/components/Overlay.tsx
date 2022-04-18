@@ -13,7 +13,7 @@ export const Overlay: FC<PropsWithChildren<Props>> = ({
 
   return (
     <Pressable onPress={onPress} style={[styles.overlay, {backgroundColor}]}>
-      {children}
+      <>{children}</>
     </Pressable>
   )
 }

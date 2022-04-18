@@ -4,6 +4,7 @@ import {Pressable, View} from 'react-native'
 import {useInternalTip} from '../hooks'
 import type {IMeasurements, TipMethods, TipProps} from '../types'
 import {ETipPosition} from '../types'
+import {useSafeAreaFrame} from 'react-native-safe-area-context'
 
 export const Tip = React.forwardRef<TipMethods, PropsWithChildren<TipProps>>(
   (
@@ -18,15 +19,16 @@ export const Tip = React.forwardRef<TipMethods, PropsWithChildren<TipProps>>(
   ) => {
     const localRef = useRef<View>(null)
     const {showTip, closeTip} = useInternalTip()
+    const {y: screenY} = useSafeAreaFrame()
 
     const measureInWindow = useCallback(
       () =>
         new Promise<IMeasurements>((res) => {
           localRef.current?.measureInWindow((x, y, width, height) => {
-            res({x, y, width, height})
+            res({x, y: y + screenY, width, height})
           })
         }),
-      [],
+      [screenY],
     )
 
     const onPress = useCallback(() => {
