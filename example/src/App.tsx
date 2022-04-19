@@ -1,54 +1,38 @@
-import React, {useCallback, useRef} from 'react'
+import React from 'react'
 import type {FC} from 'react'
-import {StyleSheet, View, Text, Button} from 'react-native'
-import {
-  Tip,
-  TipProvider,
-  ETipPosition,
-  TipMethods,
-} from 'react-native-tooltip-overhaul'
+import {Navigator} from './Navigator'
+import {TipProvider} from 'react-native-tooltip-overhaul'
 
 const App: FC = () => {
-  const renderTip = useCallback(
-    () => (
-      <View
-        style={{
-          padding: 10,
-          borderRadius: 10,
-          backgroundColor: '#fff',
-        }}>
-        <Text style={{color: '#000'}}>ABOBUS</Text>
-      </View>
-    ),
-    [],
-  )
-  const tipRef = useRef<TipMethods>(null)
+  // const renderItem: ListRenderItem<number> = useCallback(
+  //   ({index}) => {
+  //     if (index % 3 === 0) {
+  //       return (
+  //         <Tip
+  //           renderTip={renderTip}
+  //           style={{margin: 10, alignSelf: 'flex-start'}}>
+  //           <Text>Yoooo</Text>
+  //         </Tip>
+  //       )
+  //     }
+  //     return (
+  //       <View
+  //         style={{
+  //           width: 50,
+  //           height: 50,
+  //           margin: 10,
+  //           backgroundColor: index % 2 ? 'red' : 'green',
+  //         }}></View>
+  //     )
+  //   },
+  //   [renderTip],
+  // )
 
   return (
     <TipProvider>
-      <View style={styles.container}>
-        {/* <View style={styles.container}> */}
-        <Tip renderTip={renderTip} position={ETipPosition.AUTO} ref={tipRef}>
-          <Text style={{backgroundColor: 'red'}}>Result1</Text>
-        </Tip>
-        {/* </View> */}
-        {/* <View style={styles.container}> */}
-        <Tip renderTip={renderTip} position={ETipPosition.AUTO}>
-          <Text>Result2</Text>
-        </Tip>
-        {/* </View> */}
-        <Button title="Open tip" onPress={() => tipRef.current?.showTip()} />
-      </View>
+      <Navigator />
     </TipProvider>
   )
 }
 
 export default App
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'space-between',
-  },
-})
