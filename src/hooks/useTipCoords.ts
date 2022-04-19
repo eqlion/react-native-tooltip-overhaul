@@ -1,6 +1,7 @@
-import {HORIZONTAL_OFFSET, RENDER_BOUNDARY, VERTICAL_OFFSET} from '../constants'
-import {ETipPosition, IOffsets, UseTipCoords} from '../types'
+import {RENDER_BOUNDARY} from '../constants'
+import {ETipPosition, UseTipCoords} from '../types'
 import {useWindowDimensions} from 'react-native'
+import {normalizeOffsets} from '../util'
 
 export const useTipCoords: UseTipCoords = ({
   position,
@@ -9,28 +10,19 @@ export const useTipCoords: UseTipCoords = ({
   offsets,
 }) => {
   const {width: screenWidth, height: screenHeight} = useWindowDimensions()
-  let localOffsets: Required<IOffsets>
-
-  if (typeof offsets === 'number') {
-    localOffsets = {horizontal: offsets, vertical: offsets}
-  } else {
-    localOffsets = {
-      horizontal: offsets?.horizontal ?? HORIZONTAL_OFFSET,
-      vertical: offsets?.vertical ?? VERTICAL_OFFSET,
-    }
-  }
+  const localOffsets = normalizeOffsets(offsets)
 
   switch (position) {
     case ETipPosition.LEFT: {
-      const left = itemPosition.x - tipSize.width + localOffsets.horizontal
-      const top = itemPosition.y + localOffsets.vertical
+      const left = itemPosition.x - tipSize.width - localOffsets.horizontal
+      const top = itemPosition.y - localOffsets.vertical
 
       return {left, top}
     }
 
     case ETipPosition.RIGHT: {
       const left = itemPosition.x + itemPosition.width + localOffsets.horizontal
-      const top = itemPosition.y + localOffsets.vertical
+      const top = itemPosition.y - localOffsets.vertical
 
       return {left, top}
     }
@@ -41,7 +33,7 @@ export const useTipCoords: UseTipCoords = ({
         itemPosition.width / 2 -
         tipSize.width / 2 +
         localOffsets.horizontal
-      const top = itemPosition.y + localOffsets.vertical - tipSize.height
+      const top = itemPosition.y - localOffsets.vertical - tipSize.height
 
       return {left, top}
     }
