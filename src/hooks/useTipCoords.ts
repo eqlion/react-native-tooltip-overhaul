@@ -1,52 +1,65 @@
-import {HORIZONTAL_OFFSET, VERTICAL_OFFSET, RENDER_BOUNDARY} from '../constants'
-import {ETipPosition, IMeasurements, ITipSize} from '../types'
+import {HORIZONTAL_OFFSET, RENDER_BOUNDARY, VERTICAL_OFFSET} from '../constants'
+import {ETipPosition, IOffsets, UseTipCoords} from '../types'
 import {useWindowDimensions} from 'react-native'
-
-type UseTipCoords = (args: {
-  position: ETipPosition
-  itemPosition: IMeasurements
-  tipSize: ITipSize
-}) => {left: number; top: number}
 
 export const useTipCoords: UseTipCoords = ({
   position,
   itemPosition,
   tipSize,
+  offsets,
 }) => {
   const {width: screenWidth, height: screenHeight} = useWindowDimensions()
+  let localOffsets: Required<IOffsets>
+
+  if (typeof offsets === 'number') {
+    localOffsets = {horizontal: offsets, vertical: offsets}
+  } else {
+    localOffsets = {
+      horizontal: offsets?.horizontal ?? HORIZONTAL_OFFSET,
+      vertical: offsets?.vertical ?? VERTICAL_OFFSET,
+    }
+  }
 
   switch (position) {
     case ETipPosition.LEFT: {
-      const left = itemPosition.x - tipSize.width - HORIZONTAL_OFFSET
-      const top = itemPosition.y - VERTICAL_OFFSET
+      const left = itemPosition.x - tipSize.width + localOffsets.horizontal
+      const top = itemPosition.y + localOffsets.vertical
 
       return {left, top}
     }
 
     case ETipPosition.RIGHT: {
-      const left = itemPosition.x + itemPosition.width + HORIZONTAL_OFFSET
-      const top = itemPosition.y - VERTICAL_OFFSET
+      const left = itemPosition.x + itemPosition.width + localOffsets.horizontal
+      const top = itemPosition.y + localOffsets.vertical
 
       return {left, top}
     }
 
     case ETipPosition.TOP: {
-      const left = itemPosition.x + itemPosition.width / 2 - tipSize.width / 2
-      const top = itemPosition.y - VERTICAL_OFFSET - tipSize.height
+      const left =
+        itemPosition.x +
+        itemPosition.width / 2 -
+        tipSize.width / 2 +
+        localOffsets.horizontal
+      const top = itemPosition.y + localOffsets.vertical - tipSize.height
 
       return {left, top}
     }
 
     case ETipPosition.BOTTOM: {
-      const left = itemPosition.x + itemPosition.width / 2 - tipSize.width / 2
-      const top = itemPosition.y + itemPosition.height + VERTICAL_OFFSET
+      const left =
+        itemPosition.x +
+        itemPosition.width / 2 -
+        tipSize.width / 2 +
+        localOffsets.horizontal
+      const top = itemPosition.y + itemPosition.height + localOffsets.vertical
 
       return {left, top}
     }
 
     case ETipPosition.AUTO: {
       let left = itemPosition.x + itemPosition.width / 2 - tipSize.width / 2
-      let top = itemPosition.y + itemPosition.height + VERTICAL_OFFSET
+      let top = itemPosition.y + itemPosition.height + localOffsets.vertical
 
       // handle left screen boundary
       if (left - RENDER_BOUNDARY < 0) left = RENDER_BOUNDARY
@@ -56,9 +69,9 @@ export const useTipCoords: UseTipCoords = ({
         left = screenWidth - RENDER_BOUNDARY - tipSize.width
 
       // by default AUTO tries to draw the tip below the item
-      // therefore we need to handle bottom screen boundary
+      // therefore we need to handle only bottom screen boundary
       if (top + tipSize.height + RENDER_BOUNDARY > screenHeight)
-        top = itemPosition.y - VERTICAL_OFFSET - tipSize.height
+        top = itemPosition.y - localOffsets.vertical - tipSize.height
 
       return {left, top}
     }

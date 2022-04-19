@@ -5,6 +5,8 @@ export type ShowTipArgs = {
   measurements: IMeasurements
   position: ETipPosition
   renderTip: RenderTip
+  overlayOpacity?: number
+  offsets?: IOffsets | number
 }
 export interface ITipContext {
   showTip: (args: ShowTipArgs) => void
@@ -28,6 +30,11 @@ export interface ITipSize {
   height: number
 }
 
+export interface IOffsets {
+  horizontal?: number
+  vertical?: number
+}
+
 export enum ETipPosition {
   LEFT = 'LEFT',
   RIGHT = 'RIGHT',
@@ -39,12 +46,26 @@ export enum ETipPosition {
 export type RenderTip = () => ReactNode
 
 export type TipProps = {
+  /** Render function that returns `ReactNode` - the item shown on the tip */
   renderTip: RenderTip
+  /** The position of the tip: 'AUTO', 'TOP', 'BOTTOM', 'LEFT', 'RIGHT'. *Default 'AUTO'* */
   position?: ETipPosition
+  /** If the target is pressable. If `false`, you would have to handle showing the tip yourself */
   pressable?: boolean
+  /** Opacity of the overlay, `>= 0`, `<= 1`. *Default 0.6*  */
+  overlayOpacity?: number
+  /** Offsets of the tip relative to the normal position. *Default both 10* */
+  offsets?: IOffsets | number
 } & Omit<PressableProps, 'onPress' | 'disabled'>
 
 export type TipMethods = {
   showTip: () => void
   closeTip: () => void
 }
+
+export type UseTipCoords = (args: {
+  position: ETipPosition
+  itemPosition: IMeasurements
+  tipSize: ITipSize
+  offsets: IOffsets | number | undefined
+}) => {left: number; top: number}

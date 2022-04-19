@@ -9,7 +9,7 @@ export const Overlay: FC<PropsWithChildren<Props>> = ({
   onPress,
   opacity = 0.6,
 }) => {
-  const backgroundColor = `#000000${(opacity * 255).toString(16)}`
+  const backgroundColor = `#000000${Math.floor(opacity * 255).toString(16)}`
 
   return (
     <Pressable onPress={onPress} style={[styles.overlay, {backgroundColor}]}>

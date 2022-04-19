@@ -5,6 +5,7 @@ import type {StackNavigationProp} from '@react-navigation/stack'
 import type {EScreens, ParamList} from '../types'
 import {useNavigation} from '@react-navigation/native'
 import {ETipPosition, Tip} from 'react-native-tooltip-overhaul'
+import {renderTip} from '../helpers'
 
 type EdgesScreenNavigationProp = StackNavigationProp<ParamList, EScreens.Edges>
 
@@ -23,14 +24,6 @@ export const EdgesScreen: FC = () => {
     setCurrentPosition((position) => NEXT_POSITION_MAP[position])
   }, [])
 
-  const renderTip = useCallback(
-    () => (
-      <View style={styles.tipContainer}>
-        <Text style={styles.tipText}>Tip body example</Text>
-      </View>
-    ),
-    [],
-  )
   const navigation = useNavigation<EdgesScreenNavigationProp>()
 
   useLayoutEffect(() => {

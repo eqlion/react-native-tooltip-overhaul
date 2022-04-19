@@ -18,12 +18,31 @@ export const MainScreen: FC = () => {
     navigation.navigate(EScreens.Imperative)
   }, [navigation])
 
+  const navigateToOffsets = useCallback(() => {
+    navigation.navigate(EScreens.Offsets)
+  }, [navigation])
+
+  const navigateToOpacity = useCallback(() => {
+    navigation.navigate(EScreens.Opacity)
+  }, [navigation])
+
   return (
     <View style={styles.screen}>
       <View style={styles.button}>
         <Button onPress={navigateToEdges} title="Go to Edges example" />
       </View>
-      <Button onPress={navigateToImperative} title="Go to Imperative example" />
+      <View style={styles.button}>
+        <Button
+          onPress={navigateToImperative}
+          title="Go to Imperative example"
+        />
+      </View>
+      <View style={styles.button}>
+        <Button onPress={navigateToOffsets} title="Go to Offsets example" />
+      </View>
+      <View style={styles.button}>
+        <Button onPress={navigateToOpacity} title="Go to Opacity example" />
+      </View>
     </View>
   )
 }

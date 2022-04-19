@@ -2,17 +2,9 @@ import React, {useCallback, useRef} from 'react'
 import type {FC} from 'react'
 import {Button, StyleSheet, Text, View} from 'react-native'
 import {Tip, TipMethods} from 'react-native-tooltip-overhaul'
+import {renderTip} from '../helpers'
 
 export const ImperativeScreen: FC = () => {
-  const renderTip = useCallback(
-    () => (
-      <View style={styles.tipContainer}>
-        <Text style={styles.tipText}>Tip body example</Text>
-      </View>
-    ),
-    [],
-  )
-
   const tipRef = useRef<TipMethods>(null)
 
   const onPress = useCallback(() => {
