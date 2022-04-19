@@ -16,20 +16,41 @@ or
 yarn add react-native-tooltip-overhaul
 ```
 
-This is it, you are good to go!
+Also [react-native-safe-area-context]() is required for the tip to work properly. You can install it using
+
+```sh
+npm install react-native-safe-area-context
+```
+
+or
+
+```sh
+yarn add react-native-safe-area-context
+```
+
+Don't forget to install iOS pods afterwards!
+
+```sh
+npx pod-install
+```
 
 ## Usage
 
 ```tsx
 import {Tip, TipProvider} from 'react-native-tooltip-overhaul'
+// If you are using react-navigation, you can skip SafeAreaProvider,
+// as it is already included in Navigator
+import {SafeAreaProvider} from 'react-native-safe-area-context'
 
 // wrap your app with TipProvider as early as possible - it allows to draw over other elements
 
 const App: FC = () => {
   return (
-    <TipProvider>
-      {/* All your other providers/components go here */}
-    </TipProvider>
+    <SafeAreaProvider>
+      <TipProvider>
+        {/* All your other providers/components go here */}
+      </TipProvider>
+    </SafeAreaProvider>
   )
 }
 
@@ -62,11 +83,22 @@ For more examples see [example app](example/src/App.tsx)
 
 ## Props
 
-| Prop name   | Type                    | Description                                                                                                                                                                                                                                                                                                                                   |
-| ----------- | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `renderTip` | `() => React.ReactNode` | Function that renders tip                                                                                                                                                                                                                                                                                                                     |
-| `position`  | `ETipPosition`          | Where to show the tip: above/below/on the left side/on the right side of the item or automatically (it will try to show the tip bellow and centered, if the item is at the bottom of the screen, it will show above instead. If the tip touches horizontal sides of the screen, it will be moved horizontally). **Default ETipPosition.AUTO** |
-| `pressable` | `boolean`               | If pressing item should show the tip. **Default true**                                                                                                                                                                                                                                                                                        |
+| Prop name        | Type                                                 | Description                                                                                                                                                                                                                                                                                                                                   |
+| ---------------- | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `renderTip`      | `() => React.ReactNode`                              | Function that renders tip                                                                                                                                                                                                                                                                                                                     |
+| `position`       | `ETipPosition`                                       | Where to show the tip: above/below/on the left side/on the right side of the item or automatically (it will try to show the tip bellow and centered, if the item is at the bottom of the screen, it will show above instead. If the tip touches horizontal sides of the screen, it will be moved horizontally). **Default ETipPosition.AUTO** |
+| `pressable`      | `boolean`                                            | If pressing item should show the tip. **Default true**                                                                                                                                                                                                                                                                                        |
+| `overlayOpacity` | `number`                                             | The opacity of the overlay that is shown when the tip is opened. **Default 0.6**                                                                                                                                                                                                                                                              |
+| `offsets`        | `number \| {horizontal?: number, vertical?: number}` | The offsets of the tip relative to the children component. **Default {horizontal: 0, vertical: 0}**                                                                                                                                                                                                                                           |
+
+## Methods
+
+| Method name | Description    |
+| ----------- | -------------- |
+| `showTip`   | Shows the tip  |
+| `close tip` | Closes the tip |
+
+For methods usage example see [example app](example/src/screens/ImperativeScreen.tsx)
 
 ## Contributing
 
