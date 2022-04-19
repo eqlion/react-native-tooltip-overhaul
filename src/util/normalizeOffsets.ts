@@ -1,7 +1,7 @@
 import {HORIZONTAL_OFFSET, VERTICAL_OFFSET} from '../constants'
 import type {IOffsets} from '../types'
 
-export const normalizeOffsets = (offsets: number | IOffsets | undefined) => {
+export const normalizeOffsets = (offsets?: number | IOffsets | undefined) => {
   let localOffsets: Required<IOffsets>
 
   if (typeof offsets === 'number') {
