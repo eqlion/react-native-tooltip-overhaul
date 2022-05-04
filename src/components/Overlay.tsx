@@ -21,6 +21,6 @@ export const Overlay: FC<PropsWithChildren<Props>> = ({
 
 const styles = StyleSheet.create({
   overlay: {
-    ...StyleSheet.absoluteFillObject,
+    flex: 1,
   },
 })
