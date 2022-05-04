@@ -1,6 +1,6 @@
 import React, {useCallback, useRef, VFC} from 'react'
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
-import {Tip, TipMethods} from 'react-native-tooltip-overhaul'
+import {ETipPosition, Tip, TipMethods} from 'react-native-tooltip-overhaul'
 
 type Option = {
   label: string
@@ -50,7 +50,11 @@ export const SectionListCard: VFC<Props> = ({options}) => {
 
   return (
     <View style={styles.cardContainer}>
-      <Tip renderTip={renderTip} ref={tipRef} offsets={10}>
+      <Tip
+        renderTip={renderTip}
+        ref={tipRef}
+        offsets={10}
+        position={ETipPosition.RIGHT}>
         <Text>Press to show the tip</Text>
       </Tip>
     </View>
@@ -70,6 +74,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#aaa',
     marginBottom: 10,
+    alignItems: 'flex-start',
   },
   optionContainer: {paddingVertical: 10},
 })

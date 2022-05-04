@@ -4,8 +4,8 @@ import {StyleSheet, Text, SectionList, View} from 'react-native'
 import {SectionListCard} from './components'
 
 const MOCK_DATA = [
-  {data: Array.from({length: 5}, (_, i) => i)},
-  {data: Array.from({length: 5}, (_, i) => 10 * i)},
+  {data: Array.from({length: 10}, (_, i) => i)},
+  {data: Array.from({length: 10}, (_, i) => 10 * i)},
 ]
 
 export const SectionListScreen: FC = () => {
@@ -33,21 +33,13 @@ export const SectionListScreen: FC = () => {
         sections={MOCK_DATA}
         renderItem={renderItem}
         renderSectionHeader={() => <Text>Title</Text>}
+        style={styles.list}
       />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  screen: {flex: 1, alignItems: 'center', justifyContent: 'center'},
-  input: {marginBottom: 10, minWidth: 75},
-  tipContainer: {
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: '#fff',
-  },
-  tipText: {color: '#000'},
-  tip: {
-    marginBottom: 10,
-  },
+  screen: {flex: 1},
+  list: {padding: 20},
 })
