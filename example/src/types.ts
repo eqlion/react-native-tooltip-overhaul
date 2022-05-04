@@ -4,6 +4,7 @@ export enum EScreens {
   Imperative = 'Imperative',
   Offsets = 'Offsets',
   Opacity = 'Opacity',
+  SectionList = 'SectionList',
 }
 
 export type ParamList = {
@@ -12,4 +13,5 @@ export type ParamList = {
   [EScreens.Edges]: undefined
   [EScreens.Offsets]: undefined
   [EScreens.Opacity]: undefined
+  [EScreens.SectionList]: undefined
 }

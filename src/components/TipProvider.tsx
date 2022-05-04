@@ -53,14 +53,12 @@ export const TipProvider: FC<PropsWithChildren<{}>> = ({children}) => {
       <Modal
         animationType="fade"
         visible={isModalShown}
-        onRequestClose={() => setModalShown(false)}
+        onRequestClose={closeTip}
         transparent
         presentationStyle="overFullScreen"
         hardwareAccelerated
         statusBarTranslucent>
-        <Overlay
-          onPress={() => setModalShown(false)}
-          opacity={overlayOpacity.current}>
+        <Overlay onPress={closeTip} opacity={overlayOpacity.current}>
           <TipBody
             position={currentPosition.current}
             itemPosition={measurements.current}
