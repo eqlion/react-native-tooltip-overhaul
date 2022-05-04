@@ -8,23 +8,28 @@ const MOCK_DATA = [
   {data: Array.from({length: 10}, (_, i) => 10 * i)},
 ]
 
+const keyExtractor = (item: number) => String(item)
+
 export const SectionListScreen: FC = () => {
   const onOptionPress = useCallback(() => {
     console.log('Option was pressed')
   }, [])
 
-  const renderItem = () => (
-    <SectionListCard
-      options={[
-        {label: 'Normal Option', onPress: onOptionPress},
-        {label: 'Disabled Option', onPress: onOptionPress, isDisabled: true},
-        {
-          label: 'Destructive Option',
-          onPress: onOptionPress,
-          isDestructive: true,
-        },
-      ]}
-    />
+  const renderItem = useCallback(
+    () => (
+      <SectionListCard
+        options={[
+          {label: 'Normal Option', onPress: onOptionPress},
+          {label: 'Disabled Option', onPress: onOptionPress, isDisabled: true},
+          {
+            label: 'Destructive Option',
+            onPress: onOptionPress,
+            isDestructive: true,
+          },
+        ]}
+      />
+    ),
+    [onOptionPress],
   )
 
   return (
@@ -34,6 +39,7 @@ export const SectionListScreen: FC = () => {
         renderItem={renderItem}
         renderSectionHeader={() => <Text>Title</Text>}
         style={styles.list}
+        keyExtractor={keyExtractor}
       />
     </View>
   )
