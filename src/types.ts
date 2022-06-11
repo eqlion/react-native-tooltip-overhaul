@@ -7,6 +7,7 @@ export type ShowTipArgs = {
   renderTip: RenderTip
   overlayOpacity?: number
   offsets?: IOffsets | number
+  onClose?: () => void
 }
 export interface ITipContext {
   showTip: (args: ShowTipArgs) => void
@@ -56,6 +57,10 @@ export type TipProps = {
   overlayOpacity?: number
   /** Offsets of the tip relative to the normal position. *Default both 10* */
   offsets?: IOffsets | number
+  /** Callback, that is called when the tip is opened */
+  onShow?: () => void
+  /** Callback, that is called when the tip is closed */
+  onClose?: () => void
 } & Omit<PressableProps, 'onPress' | 'disabled'>
 
 export type TipMethods = {
