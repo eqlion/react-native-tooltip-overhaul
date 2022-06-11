@@ -2,7 +2,7 @@
 
 ![ts](https://badgen.net/badge/icon/typescript?icon=typescript&label) ![license](https://badgen.net/github/license/eqlion/react-native-tooltip-overhaul) [![runs with expo](https://img.shields.io/badge/Runs%20with%20Expo-4630EB.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.io/)
 
-Tool tips library for React Native
+Tool tips library for React Native, inspired by [react-native-tip](https://github.com/MaiconGilton/react-native-tip), but rewritten from scratch with functional components, context and endless customization options.
 
 ## Installation
 
@@ -98,7 +98,7 @@ For more examples see [example app](example/src/App.tsx)
 | Method name | Description    |
 | ----------- | -------------- |
 | `showTip`   | Shows the tip  |
-| `close tip` | Closes the tip |
+| `closeTip`  | Closes the tip |
 
 For methods usage example see [example app](example/src/screens/ImperativeScreen.tsx)
 
