@@ -30,6 +30,10 @@ export const MainScreen: FC = () => {
     navigation.navigate(EScreens.SectionList)
   }, [navigation])
 
+  const navigateToCallback = useCallback(() => {
+    navigation.navigate(EScreens.Callback)
+  }, [navigation])
+
   return (
     <View style={styles.screen}>
       <View style={styles.button}>
@@ -52,6 +56,9 @@ export const MainScreen: FC = () => {
           onPress={navigateToSectionList}
           title="Go to SectionList example"
         />
+      </View>
+      <View style={styles.button}>
+        <Button onPress={navigateToCallback} title="Go to Callback example" />
       </View>
     </View>
   )

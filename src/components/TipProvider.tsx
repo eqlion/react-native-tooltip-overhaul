@@ -27,6 +27,7 @@ export const TipProvider: FC<PropsWithChildren<{}>> = ({children}) => {
   const overlayOpacity = useRef<number | undefined>()
   const offsets = useRef<IOffsets | number | undefined>()
   const renderTip = useRef<RenderTip>(() => null)
+  const onClose = useRef<(() => void) | undefined>()
 
   const showTip = useCallback((args: ShowTipArgs) => {
     // changing ref does not cause a UI update,
@@ -36,10 +37,12 @@ export const TipProvider: FC<PropsWithChildren<{}>> = ({children}) => {
     currentPosition.current = args.position
     overlayOpacity.current = args.overlayOpacity
     offsets.current = args.offsets
+    onClose.current = args.onClose
     setModalShown(true)
   }, [])
 
   const closeTip = useCallback(() => {
+    onClose.current?.()
     setModalShown(false)
   }, [])
 
