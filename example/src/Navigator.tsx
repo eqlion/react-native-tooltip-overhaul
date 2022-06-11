@@ -11,6 +11,7 @@ import {
   OpacityScreen,
   SectionListScreen,
   CallbackScreen,
+  DropdownScreen,
 } from './screens'
 
 const Stack = createStackNavigator<ParamList>()
@@ -29,6 +30,7 @@ export const Navigator: FC = () => {
           component={SectionListScreen}
         />
         <Stack.Screen name={EScreens.Callback} component={CallbackScreen} />
+        <Stack.Screen name={EScreens.Dropdown} component={DropdownScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )
