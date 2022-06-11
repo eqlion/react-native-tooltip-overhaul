@@ -61,14 +61,13 @@ export const TipProvider: FC<PropsWithChildren<{}>> = ({children}) => {
         presentationStyle="overFullScreen"
         hardwareAccelerated
         statusBarTranslucent>
-        <Overlay onPress={closeTip} opacity={overlayOpacity.current}>
-          <TipBody
-            position={currentPosition.current}
-            itemPosition={measurements.current}
-            offsets={offsets.current}>
-            {renderTip.current()}
-          </TipBody>
-        </Overlay>
+        <Overlay onPress={closeTip} opacity={overlayOpacity.current} />
+        <TipBody
+          position={currentPosition.current}
+          itemPosition={measurements.current}
+          offsets={offsets.current}>
+          {renderTip.current()}
+        </TipBody>
       </Modal>
     </TipContext.Provider>
   )

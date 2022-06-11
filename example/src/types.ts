@@ -6,6 +6,7 @@ export enum EScreens {
   Opacity = 'Opacity',
   SectionList = 'SectionList',
   Callback = 'Callback',
+  Dropdown = 'Dropdown',
 }
 
 export type ParamList = {
@@ -16,4 +17,5 @@ export type ParamList = {
   [EScreens.Opacity]: undefined
   [EScreens.SectionList]: undefined
   [EScreens.Callback]: undefined
+  [EScreens.Dropdown]: undefined
 }
