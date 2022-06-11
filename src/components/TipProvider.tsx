@@ -27,6 +27,7 @@ export const TipProvider: FC<PropsWithChildren<{}>> = ({children}) => {
   const overlayOpacity = useRef<number | undefined>()
   const offsets = useRef<IOffsets | number | undefined>()
   const renderTip = useRef<RenderTip>(() => null)
+  const onClose = useRef<(() => void) | undefined>()
 
   const showTip = useCallback((args: ShowTipArgs) => {
     // changing ref does not cause a UI update,
@@ -36,10 +37,12 @@ export const TipProvider: FC<PropsWithChildren<{}>> = ({children}) => {
     currentPosition.current = args.position
     overlayOpacity.current = args.overlayOpacity
     offsets.current = args.offsets
+    onClose.current = args.onClose
     setModalShown(true)
   }, [])
 
   const closeTip = useCallback(() => {
+    onClose.current?.()
     setModalShown(false)
   }, [])
 
@@ -53,21 +56,18 @@ export const TipProvider: FC<PropsWithChildren<{}>> = ({children}) => {
       <Modal
         animationType="fade"
         visible={isModalShown}
-        onRequestClose={() => setModalShown(false)}
+        onRequestClose={closeTip}
         transparent
         presentationStyle="overFullScreen"
         hardwareAccelerated
         statusBarTranslucent>
-        <Overlay
-          onPress={() => setModalShown(false)}
-          opacity={overlayOpacity.current}>
-          <TipBody
-            position={currentPosition.current}
-            itemPosition={measurements.current}
-            offsets={offsets.current}>
-            {renderTip.current()}
-          </TipBody>
-        </Overlay>
+        <Overlay onPress={closeTip} opacity={overlayOpacity.current} />
+        <TipBody
+          position={currentPosition.current}
+          itemPosition={measurements.current}
+          offsets={offsets.current}>
+          {renderTip.current()}
+        </TipBody>
       </Modal>
     </TipContext.Provider>
   )

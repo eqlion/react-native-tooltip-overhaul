@@ -15,6 +15,8 @@ export const Tip = React.forwardRef<TipMethods, PropsWithChildren<TipProps>>(
       pressable = true,
       overlayOpacity,
       offsets,
+      onShow,
+      onClose,
       ...props
     },
     ref,
@@ -34,16 +36,27 @@ export const Tip = React.forwardRef<TipMethods, PropsWithChildren<TipProps>>(
     )
 
     const onPress = useCallback(() => {
-      measureInWindow().then((measurements) =>
+      measureInWindow().then((measurements) => {
         showTip({
           measurements,
           position,
           renderTip,
           overlayOpacity,
           offsets,
-        }),
-      )
-    }, [measureInWindow, offsets, overlayOpacity, position, renderTip, showTip])
+          onClose,
+        })
+        onShow?.()
+      })
+    }, [
+      measureInWindow,
+      offsets,
+      onClose,
+      onShow,
+      overlayOpacity,
+      position,
+      renderTip,
+      showTip,
+    ])
 
     useImperativeHandle(ref, () => ({showTip: onPress, closeTip}))
 
